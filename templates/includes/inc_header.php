@@ -29,6 +29,9 @@
         .priority-badge {
             font-size: 0.75rem;
         }
+        .completed-badge {
+            font-size: 0.75rem;
+        }
         
         .completed-task {
             opacity: 0.7;

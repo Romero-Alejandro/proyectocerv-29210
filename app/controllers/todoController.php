@@ -74,7 +74,8 @@ class todoController extends Controller {
             'task' => trim($_POST['task']),
             'description' => trim($_POST['description'] ?? ''),
             'priority' => $_POST['priority'] ?? 'medium',
-            'completed' => 0
+            'completed' => 0,
+            'favorite' => $_POST['favorite'] ?? 0
         ];
         
         // Crear tarea
@@ -111,7 +112,8 @@ class todoController extends Controller {
         $todoData = [
             'task' => trim($_POST['task']),
             'description' => trim($_POST['description'] ?? ''),
-            'priority' => $_POST['priority'] ?? 'medium'
+            'priority' => $_POST['priority'] ?? 'medium',
+            'favorite' => $_POST['favorite'] ?? 0
         ];
         
         // Actualizar tarea
@@ -146,6 +148,30 @@ class todoController extends Controller {
         $newStatus = $todo['completed'] ? 'pendiente' : 'completada';
         $this->redirectWithMessage('todo', "Tarea marcada como {$newStatus}", 'info');
     }
+
+    /**
+     * Cambiar importancia de una tarea (favorita/no favorita)
+     */
+    function toggleFavorite() {
+        if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+            $this->redirectWithMessage('todo', 'ID de tarea inválido', 'danger');
+            return;
+        }
+        
+        $id = $_GET['id'];
+        
+        $todo = todoModel::find($id);
+        if (!$todo) {
+            $this->redirectWithMessage('todo', 'Tarea no encontrada', 'danger');
+            return;
+        }
+
+        Todo::toggleFavorite($id);
+        
+        $newStatus = $todo['favorite'] ? 'favorita' : 'no favorita';
+        $this->redirectWithMessage('todo', "Tarea marcada como {$newStatus}", 'info');
+    }
+
     
     /**
      * Eliminar una tarea

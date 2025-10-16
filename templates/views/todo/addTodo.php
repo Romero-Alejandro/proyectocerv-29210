@@ -33,7 +33,21 @@
                             <option value="high">🔴 Alta</option>
                         </select>
                     </div>
-                    
+                                       
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input"
+                            type="checkbox"
+                            id="favorite"
+                            name="favorite"
+                            value="1">
+                        <label class="form-check-label" for="favorite">
+                            <div class="d-flex align-items-center">
+                                <div class="me-2">Marcar como favorita</div>
+                                <i class="fa-solid fa-star text-warning" style="font-size: 1.1em;"></i>
+                            </div>
+                        </label>
+                    </div>
+
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <a href="<?= URL ?>todo" class="btn btn-outline-secondary me-md-2">
                             Cancelar

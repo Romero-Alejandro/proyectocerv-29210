@@ -37,7 +37,18 @@ class Todo {
         Db::query("UPDATE todos SET completed = NOT completed WHERE id = ?", [$id]);
         return true;
     }
+
+      /**
+     * Cambiar la importancia de una tarea (favorita/no favorita)
+     * @param int $id ID de la tarea
+     * @return bool True si se cambió exitosamente
+     */
+    public static function toggleFavorite($id) {
+        Db::query("UPDATE todos SET favorite = NOT favorite WHERE id = ?", [$id]);
+        return true;
+    }
     
+        
     /**
      * Obtener el texto de prioridad en español
      * @param string $priority Prioridad en inglés
@@ -64,6 +75,30 @@ class Todo {
             'high' => 'danger'
         ];
         return $colors[$priority] ?? 'secondary';
+    }
+
+      /**
+     * Obtener el texto de prioridad en español
+     * @param string $priority Prioridad en inglés
+     * @return string Prioridad en español
+     */
+    public static function getCompletedText($priority) {
+        $completed = [
+            '1' => 'Completada',
+        ];
+        return $completed[$priority] ?? 'Completada';
+    }
+    
+    /**
+     * Obtener el color de Bootstrap para la prioridad
+     * @param string $priority Prioridad
+     * @return string Clase CSS de Bootstrap
+     */
+    public static function getCompletedColor($priority) {
+        $colors = [
+            '1' => 'success',
+        ];
+        return $colors[$priority] ?? 'success';
     }
 }
 ?>

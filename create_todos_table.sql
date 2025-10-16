@@ -5,13 +5,17 @@ CREATE TABLE `todos` (
     `description` TEXT,
     `completed` TINYINT(1) DEFAULT 0,
     `priority` ENUM('low', 'medium', 'high') DEFAULT 'medium',
+    `favorite` TINYINT(1) DEFAULT 0, -- Agregado
     `created_at` DATETIME NOT NULL,
     `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Insertar datos de ejemplo
-INSERT INTO `todos` (`task`, `description`, `priority`, `created_at`) VALUES
-('Aprender el framework', 'Estudiar la estructura MVC del proyecto', 'high', NOW()),
-('Crear todo list', 'Implementar funcionalidad completa', 'medium', NOW()),
-('Documentar código', 'Crear README con flujo de aplicación', 'low', NOW());
+INSERT INTO `todos` (`task`, `description`, `priority`, `favorite`, `created_at`) VALUES
+('Aprender el framework', 'Estudiar la estructura MVC del proyecto', 'high', 0, NOW()),
+('Crear todo list', 'Implementar funcionalidad completa', 'medium', 0, NOW()),
+('Documentar código', 'Crear README con flujo de aplicación', 'low', 0, NOW());
+
+
+ALTER TABLE todos ADD COLUMN favorite TINYINT(1) DEFAULT 0;

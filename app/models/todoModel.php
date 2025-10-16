@@ -7,7 +7,7 @@ class todoModel extends Model {
     protected $table = 'todos';
     
     // Campos que se pueden llenar masivamente
-    protected $fillable = ['task', 'description', 'priority', 'completed'];
+    protected $fillable = ['task', 'description', 'priority', 'completed', 'favorite'];
     
     /**
      * Obtener todas las tareas con información adicional
@@ -21,6 +21,8 @@ class todoModel extends Model {
             $todo['priority_text'] = Todo::getPriorityText($todo['priority']);
             $todo['priority_color'] = Todo::getPriorityColor($todo['priority']);
             $todo['formatted_date'] = date('d/m/Y H:i', strtotime($todo['created_at']));
+            $todo['completed_text'] = Todo::getCompletedText($todo['completed']);
+            $todo['completed_color'] = Todo::getCompletedColor($todo['completed']);
         }
         
         return $todos;
@@ -41,6 +43,24 @@ class todoModel extends Model {
      */
     public static function getPending() {
         $result = Db::query("SELECT * FROM todos WHERE completed = 0 ORDER BY priority DESC, created_at ASC");
+        return $result->fetchAll();
+    }
+
+    /**
+     * Obtener tareas favoritas
+     * @return array Array de tareas favoritas
+     */
+    public static function getFavorites() {
+        $result = Db::query("SELECT * FROM todos WHERE favorite = 1 ORDER BY updated_at DESC");
+        return $result->fetchAll();
+    }
+
+    /**
+     * Obtener tareas no favoritas
+     * @return array Array de tareas no favoritas
+     */
+    public static function getNotFavorites() {
+        $result = Db::query("SELECT * FROM todos WHERE favorite = 0 ORDER BY updated_at DESC");
         return $result->fetchAll();
     }
     
