@@ -16,6 +16,3 @@ INSERT INTO `todos` (`task`, `description`, `priority`, `favorite`, `created_at`
 ('Aprender el framework', 'Estudiar la estructura MVC del proyecto', 'high', 0, NOW()),
 ('Crear todo list', 'Implementar funcionalidad completa', 'medium', 0, NOW()),
 ('Documentar código', 'Crear README con flujo de aplicación', 'low', 0, NOW());
-
-
-ALTER TABLE todos ADD COLUMN favorite TINYINT(1) DEFAULT 0;

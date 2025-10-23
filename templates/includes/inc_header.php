@@ -34,7 +34,11 @@
         }
         
         .completed-task {
-            opacity: 0.7;
+            background-color: #f0f0f0; 
+            opacity: 0.7; 
+            text-decoration: line-through; 
+            color: #999; 
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05); 
         }
     </style>
 </head>
