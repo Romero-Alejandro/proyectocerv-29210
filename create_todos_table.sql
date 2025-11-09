@@ -5,10 +5,13 @@ CREATE TABLE `todos` (
     `description` TEXT,
     `completed` TINYINT(1) DEFAULT 0,
     `priority` ENUM('low', 'medium', 'high') DEFAULT 'medium',
-    `favorite` TINYINT(1) DEFAULT 0, -- Agregado
+    `favorite` TINYINT(1) DEFAULT 0, 
+    `category_id` TINYINT DEFAULT 1,
     `created_at` DATETIME NOT NULL,
     `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
+    
+    FOREIGN KEY (category_id) REFERENCES category(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Insertar datos de ejemplo
@@ -16,3 +19,20 @@ INSERT INTO `todos` (`task`, `description`, `priority`, `favorite`, `created_at`
 ('Aprender el framework', 'Estudiar la estructura MVC del proyecto', 'high', 0, NOW()),
 ('Crear todo list', 'Implementar funcionalidad completa', 'medium', 0, NOW()),
 ('Documentar código', 'Crear README con flujo de aplicación', 'low', 0, NOW());
+
+CREATE TABLE `category` (
+    `id` TINYINT NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(25) NOT NULL,
+    `color` VARCHAR(10) NOT NULL DEFAULT '#0d6efd',
+    
+    `created_at` DATETIME NOT NULL, 
+    `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Insertar datos 
+INSERT INTO `category` (`name`, `color`, `created_at`) VALUES
+('Académicas', '#dc3545', NOW()), 
+('Laborales', '#ffc107', NOW()),     
+('Hogar', '#28a745', NOW());

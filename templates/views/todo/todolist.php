@@ -12,12 +12,12 @@
         <!-- Barra de búsqueda -->
         <div class="mb-4">
             <form method="GET" action="<?= URL ?>todo/search" class="d-flex">
-                <input type="text" class="form-control me-2" name="q" 
-                       placeholder="Buscar tareas..." value="<?= $data['search_term'] ?? '' ?>">
+                <input type="text" class="form-control me-2" name="q"
+                    placeholder="Buscar tareas..." value="<?= $data['search_term'] ?? '' ?>">
                 <button type="submit" class="btn btn-outline-secondary">Buscar</button>
             </form>
         </div>
-        
+
         <!-- Lista de tareas -->
         <div class="card">
             <div class="card-header">
@@ -26,7 +26,7 @@
             <div class="card-body p-0">
                 <?php if (!empty($data['todos'])): ?>
                     <?php foreach ($data['todos'] as $todo): ?>
-                        <div class="todo-item p-3 border-bottom <?= $todo['completed'] ? 'completed-task' : '' ?>">
+                        <div class="todo-item p-3 border-bottom <?= $todo['completed'] ? 'completed-task' : '' ?>" style="border-left: 4px solid <?= htmlspecialchars($todo['category_color'] ?? '#343a40') ?>;">
                             <div class="d-flex align-items-start">
                                 <div class="flex-grow-1">
                                     <div class="d-flex align-items-center mb-2 gap-2">
@@ -36,46 +36,49 @@
                                         <span class="badge priority-badge bg-<?= $todo['priority_color'] ?>">
                                             <?= $todo['priority_text'] ?>
                                         </span>
+                                        <span class="badge" style="background-color: <?= htmlspecialchars($todo['category_color'] ?? '#6c757d') ?>; color: #fff;">
+                                            <?= htmlspecialchars($todo['category_name'] ?? 'Sin categoría') ?>
+                                        </span>
                                         <?php if ($todo['completed']): ?>
                                             <span class="badge completed-badge bg-<?= $todo['completed_color'] ?>">
                                                 <?= $todo['completed_text'] ?>
                                             </span>
                                         <?php endif; ?>
                                         <?php if ($todo['favorite']): ?>
-                                         <i class="fa-solid fa-star text-warning"></i>
+                                            <i class="fa-solid fa-star text-warning"></i>
                                         <?php endif; ?>
                                     </div>
-                                    
+
                                     <?php if ($todo['description']): ?>
                                         <p class="text-muted mb-2 small">
                                             <?= htmlspecialchars($todo['description']) ?>
                                         </p>
                                     <?php endif; ?>
-                                    
+
                                     <small class="text-muted">
                                         <?= $todo['formatted_date'] ?>
                                     </small>
                                 </div>
-                                
+
                                 <div class="d-flex gap-2">
-                                    <a href="<?= URL ?>todo/edit?id=<?= $todo['id'] ?>" 
-                                       class="btn btn-sm btn-outline-primary">
+                                    <a href="<?= URL ?>todo/edit?id=<?= $todo['id'] ?>"
+                                        class="btn btn-sm btn-outline-primary">
                                         Editar
                                     </a>
-                                        <button type="button" 
-                                                class="btn btn-sm btn-outline-danger delete-btn"
-                                                data-bs-toggle="modal" 
-                                                data-bs-target="#deleteConfirmModal"
-                                                data-delete-url="<?= URL ?>todo/delete?id=<?= $todo['id'] ?>">
-                                            Eliminar
-                                        </button>
-                                   <a href="<?= URL ?>todo/toggle?id=<?= $todo['id'] ?>" 
-                                     class="btn btn-sm <?= $todo['completed'] ? 'btn-outline-success' : 'btn-success' ?>">
-                                      <?= $todo['completed'] ? 'Completada' : 'Marcar Completada' ?>
-                                      <?= $todo['completed'] ? '<i class="fa-solid fa-check"></i>' : ""?>
+                                    <button type="button"
+                                        class="btn btn-sm btn-outline-danger delete-btn"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteConfirmModal"
+                                        data-delete-url="<?= URL ?>todo/delete?id=<?= $todo['id'] ?>">
+                                        Eliminar
+                                    </button>
+                                    <a href="<?= URL ?>todo/toggle?id=<?= $todo['id'] ?>"
+                                        class="btn btn-sm <?= $todo['completed'] ? 'btn-outline-success' : 'btn-success' ?>">
+                                        <?= $todo['completed'] ? 'Completada' : 'Marcar Completada' ?>
+                                        <?= $todo['completed'] ? '<i class="fa-solid fa-check"></i>' : "" ?>
                                     </a>
-                                    <a href="<?= URL ?>todo/toggleFavorite?id=<?= $todo['id'] ?>" 
-                                       class="btn btn-sm <?= $todo['favorite'] ? 'btn-outline-warning' : 'btn-warning text-white' ?>">
+                                    <a href="<?= URL ?>todo/toggleFavorite?id=<?= $todo['id'] ?>"
+                                        class="btn btn-sm <?= $todo['favorite'] ? 'btn-outline-warning' : 'btn-warning text-white' ?>">
                                         <?= $todo['favorite'] ? 'Favorita' : 'Marcar como favorita' ?>
                                     </a>
                                 </div>
@@ -101,7 +104,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Modal de Confirmación de Eliminación -->
     <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">

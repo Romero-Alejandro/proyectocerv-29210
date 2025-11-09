@@ -14,19 +14,19 @@
             <div class="card-body">
                 <form method="POST" action="<?= URL ?>todo/update">
                     <input type="hidden" name="id" value="<?= $data['todo']['id'] ?>">
-                    
+
                     <div class="mb-3">
                         <label for="task" class="form-label">Tarea *</label>
-                        <input type="text" class="form-control" id="task" name="task" 
-                               placeholder="¿Qué necesitas hacer?" value="<?= htmlspecialchars($data['todo']['task']) ?>" required>
+                        <input type="text" class="form-control" id="task" name="task"
+                            placeholder="¿Qué necesitas hacer?" value="<?= htmlspecialchars($data['todo']['task']) ?>" required>
                     </div>
-                    
+
                     <div class="mb-3">
                         <label for="description" class="form-label">Descripción</label>
-                        <textarea class="form-control" id="description" name="description" 
-                                  rows="3" placeholder="Detalles adicionales (opcional)"><?= htmlspecialchars($data['todo']['description']) ?></textarea>
+                        <textarea class="form-control" id="description" name="description"
+                            rows="3" placeholder="Detalles adicionales (opcional)"><?= htmlspecialchars($data['todo']['description']) ?></textarea>
                     </div>
-                    
+
                     <div class="mb-3">
                         <label for="priority" class="form-label">Prioridad</label>
                         <select class="form-select" id="priority" name="priority">
@@ -35,21 +35,26 @@
                             <option value="high" <?= $data['todo']['priority'] == 'high' ? 'selected' : '' ?>>🔴 Alta</option>
                         </select>
                     </div>
-                    
-                    <div class="form-check form-switch mb-3">
-                        <input class="form-check-input"
-                            type="checkbox"
-                            id="favorite"
-                            name="favorite"
-                            value="1">
-                        <label class="form-check-label" for="favorite">
-                            <div class="d-flex align-items-center">
-                                <div class="me-2">Marcar como favorita</div>
-                                <i class="fa-solid fa-star text-warning" style="font-size: 1.1em;"></i>
-                            </div>
-                        </label>
+
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Categoría</label>
+                        <select class="form-select" id="category" name="category">
+                            <option value="1" <?= $data['todo']['category_id'] == 1 ? 'selected' : '' ?>>Académicas</option>
+                            <option value="2" <?= $data['todo']['category_id'] == 2 ? 'selected' : '' ?>>Laborales</option>
+                            <option value="3" <?= $data['todo']['category_id'] == 3 ? 'selected' : '' ?>>Hogar</option>
+                        </select>
                     </div>
-                    
+
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="1" id="favorite" name="favorite"
+                                <?= $data['todo']['favorite'] ? 'checked' : '' ?>>
+                            <label class="form-check-label" for="favorite">
+                                Favorita
+                            </label>
+                        </div>
+                    </div>
+
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <a href="<?= URL ?>todo" class="btn btn-outline-secondary me-md-2">
                             Cancelar

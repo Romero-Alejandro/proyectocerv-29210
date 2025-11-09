@@ -15,16 +15,16 @@
                 <form method="POST" action="<?= URL ?>todo/store">
                     <div class="mb-3">
                         <label for="task" class="form-label">Tarea *</label>
-                        <input type="text" class="form-control" id="task" name="task" 
-                               placeholder="¿Qué necesitas hacer?" required>
+                        <input type="text" class="form-control" id="task" name="task"
+                            placeholder="¿Qué necesitas hacer?" required>
                     </div>
-                    
+
                     <div class="mb-3">
                         <label for="description" class="form-label">Descripción</label>
-                        <textarea class="form-control" id="description" name="description" 
-                                  rows="3" placeholder="Detalles adicionales (opcional)"></textarea>
+                        <textarea class="form-control" id="description" name="description"
+                            rows="3" placeholder="Detalles adicionales (opcional)"></textarea>
                     </div>
-                    
+
                     <div class="mb-3">
                         <label for="priority" class="form-label">Prioridad</label>
                         <select class="form-select" id="priority" name="priority">
@@ -33,7 +33,38 @@
                             <option value="high">🔴 Alta</option>
                         </select>
                     </div>
-                                       
+
+                    <!--                       <div class="mb-3">
+                        <label for="category" class="form-label">Categoría</label>
+                        <select class="form-select" id="category" name="category">
+                            <option value="1">Académicas</option>
+                            <option value="2" selected>Laborales</option>
+                            <option value="3">Hogar</option>
+                        </select>
+                    </div> -->
+
+                    <!-- Listado dinámico de las categorías disponibles -->
+                    <div class="mb-3">
+                        <label for="category_id" class="form-label">Categoría</label>
+                        <select class="form-select" id="category_id" name="category_id">
+                            <option value="">-- Seleccione una categoría --</option>
+
+                            <?php
+                            if (isset($data['category']) && is_array($data['category'])):
+                            ?>
+                                <?php
+                                foreach ($data['category'] as $category):
+                                ?>
+                                    <option value="<?= $category['id'] ?>">
+                                        <?= htmlspecialchars($category['name']) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+
+                        </select>
+                    </div>
+
+
                     <div class="form-check form-switch mb-3">
                         <input class="form-check-input"
                             type="checkbox"
