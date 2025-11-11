@@ -1,5 +1,15 @@
 # 📋 TODO LIST
 
+🔗 **Repositorio Actual:**  
+[👉 Proyecto](https://github.com/Romero-Alejandro/proyectocerv-29210)
+
+## 🏛️ Patrones de Diseño Utilizados
+
+- **Modelo-Vista-Controlador (MVC):** Es el patrón arquitectónico principal. Separa la lógica de negocio (Modelo), la presentación (Vista) y el control del flujo de la aplicación (Controlador), como se detalla en la siguiente sección.
+
+- **Herencia**
+  Es un mecanismo de programación que permite a una clase (subclase) adquirir propiedades y comportamientos (métodos) de otra clase (superclase), estableciendo una relación "es un/a" para promover la reutilización de código.
+
 ## 🏗️ Arquitectura MVC
 
 ### **Modelo (M)**
