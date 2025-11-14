@@ -1,38 +1,39 @@
--- Tabla para el sistema de tareas
-CREATE TABLE `todos` (
-    `id` BIGINT NOT NULL AUTO_INCREMENT,
-    `task` VARCHAR(255) NOT NULL,
-    `description` TEXT,
-    `completed` TINYINT(1) DEFAULT 0,
-    `priority` ENUM('low', 'medium', 'high') DEFAULT 'medium',
-    `favorite` TINYINT(1) DEFAULT 0, 
-    `category_id` TINYINT DEFAULT 1,
-    `created_at` DATETIME NOT NULL,
+CREATE TABLE `category` (
+    `id` TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(50) NOT NULL UNIQUE,
+    `color` VARCHAR(10) NOT NULL DEFAULT '#0d6efd',
+    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, 
     `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
-    
-    FOREIGN KEY (category_id) REFERENCES category(id)
+    KEY `idx_name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Insertar datos de ejemplo
-INSERT INTO `todos` (`task`, `description`, `priority`, `favorite`, `created_at`) VALUES
-('Aprender el framework', 'Estudiar la estructura MVC del proyecto', 'high', 0, NOW()),
-('Crear todo list', 'Implementar funcionalidad completa', 'medium', 0, NOW()),
-('Documentar código', 'Crear README con flujo de aplicación', 'low', 0, NOW());
+INSERT INTO `category` (`id`, `name`, `color`) VALUES
+(1, 'Personal', '#6c757d'),
+(2, 'Académicas', '#dc3545'), 
+(3, 'Laborales', '#ffc107'),     
+(4, 'Hogar', '#28a745');
 
-CREATE TABLE `category` (
-    `id` TINYINT NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(25) NOT NULL,
-    `color` VARCHAR(10) NOT NULL DEFAULT '#0d6efd',
-    
-    `created_at` DATETIME NOT NULL, 
+CREATE TABLE `todos` (
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `task` VARCHAR(255) NOT NULL,
+    `description` TEXT,
+    `completed` BOOLEAN NOT NULL DEFAULT FALSE,
+    `priority` ENUM('low', 'medium', 'high') NOT NULL DEFAULT 'medium',
+    `favorite` BOOLEAN NOT NULL DEFAULT FALSE, 
+    `category_id` TINYINT UNSIGNED NOT NULL DEFAULT 1,
+    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
+    KEY `idx_category_id` (`category_id`),
+    KEY `idx_priority` (`priority`),
+    CONSTRAINT `fk_todos_category` 
+        FOREIGN KEY (`category_id`) REFERENCES `category`(`id`) 
+        ON DELETE RESTRICT 
+        ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Insertar datos 
-INSERT INTO `category` (`name`, `color`, `created_at`) VALUES
-('Académicas', '#dc3545', NOW()), 
-('Laborales', '#ffc107', NOW()),     
-('Hogar', '#28a745', NOW());
+INSERT INTO `todos` (`task`, `description`, `priority`, `favorite`, `category_id`) VALUES
+('Aprender el framework', 'Estudiar la estructura MVC del proyecto', 'high', FALSE, 2),
+('Crear todo list', 'Implementar funcionalidad completa', 'medium', FALSE, 3),
+('Documentar código', 'Crear README con flujo de aplicación', 'low', FALSE, 3);
